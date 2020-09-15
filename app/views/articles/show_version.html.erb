@@ -1,0 +1,40 @@
+
+<% if @article != nil %>
+  <p>
+    <strong>Title:</strong>
+    <%= @article.title %>
+  </p>
+  <p>
+    <strong>Body:</strong>
+    <%= @article.text %>
+  </p>
+<% end %>
+
+<% if @article == nil %>
+  <p>None</p>
+<% end %>
+
+<% if @article && @article.comments %> 
+  <table>
+    <tr>
+      <th>Commenter</th>
+      <th>Comment</th>
+      <th></th>
+    </tr>
+  
+    <% @article.comments.each do |comment| %>
+      <tr>
+        <td><%= comment.commenter %></td>
+        <td><%= comment.body  %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<% if @article %>
+  <%= link_to 'Back', article_show_history_path(@article.id, @article)%>
+<% end %>
+
+
+
+

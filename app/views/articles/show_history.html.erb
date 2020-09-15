@@ -1,0 +1,20 @@
+<h1>Listing Versions</h1>
+ 
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Created At</th>
+    <th></th>
+  </tr>
+ 
+  <% @versions.each do |version| %>
+    <tr>
+      <td><%= version.id %></td>
+      <td><%= version.created_at %></td>
+      <td><%= link_to 'Show Version', article_show_version_path(version.id) %></td> 
+    </tr>
+  <% end %>
+</table>
+
+
+<%= link_to 'Back', article_path(@article) %>
