@@ -1,0 +1,40 @@
+
+<% if @room_type != nil %>
+  <p>
+    <strong>Name:</strong>
+    <%= @room_type.name %>
+  </p>
+  <p>
+    <strong>Description:</strong>
+    <%= @room_type.description %>
+  </p>
+<% end %>
+
+<% if @room_type == nil %>
+  <p>None</p>
+<% end %>
+
+<% if @room_type && @room_type.rooms %> 
+  <table>
+    <tr>
+      <th>name</th>
+      <th>description</th>
+      <th></th>
+    </tr>
+  
+    <% @room_type.rooms.each do |room| %>
+      <tr>
+        <td><%= room.name %></td>
+        <td><%= room.description  %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<% if @room_type %>
+  <%= link_to 'Back', room_type_show_history_path(@room_type.id, @room_type)%>
+<% end %>
+
+
+
+
