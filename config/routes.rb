@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :room_types
   root 'welcome#index'
 
   get 'welcome/index'
@@ -11,6 +12,8 @@ Rails.application.routes.draw do
     # match 'articles/:vid/version/show' => 'articles#show_version', :via => [:get, :post], :as => :article_show_version
     resources :comments
   end
+
+  resources  :comments 
  
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

@@ -46,7 +46,9 @@ class ArticlesController < ApplicationController
   end
 
   def update
+    # binding.remote_pry
     @article = Article.find(params[:id])
+
    
     if @article.update(article_params)
       redirect_to @article
@@ -72,7 +74,7 @@ class ArticlesController < ApplicationController
     end
 
     def article_params
-      params.require(:article).permit(:title, :text, :versions)
+      params.require(:article).permit(:title, :text, :versions )
     end
 
 end

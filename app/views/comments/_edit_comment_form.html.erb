@@ -1,0 +1,14 @@
+<%= form_for @comment do |f| %>
+  <%= f.label 'Commenter' %><br>
+  <%= f.text_field :commenter %><br>
+  
+  <br>
+  <%= f.label 'Body' %><br>
+  <%= f.text_area :body %><br>
+
+  <br>
+  <%= f.submit "Submit Comment" %>
+
+<% end %>
+<br>
+<%= link_to 'Back', edit_article_path(@comment.article_id) %>
