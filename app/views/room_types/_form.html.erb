@@ -1,55 +1,15 @@
 
-<%= form_with model: @room_type, local: true do |form| %>
+<%= react_component("RoomTypeBuilder", { 
+  room_type: @room_type,
+  rooms: @rooms,
+  all_rooms: @all_rooms,
+  all_room_types: @all_room_types,
+  is_new: @is_new, 
+  room_type_create_path: room_types_path(),
  
- 
- 
-  <p>
-    <%= form.label :title %><br>
-    <%= form.text_field :name %>
-  </p>
- 
-  <p>
-    <%= form.label :text %><br>
-    <%= form.text_area :description %>
-  </p>
-
-  <hr>
+  room_type_save_path: @room_type_save_path}) %>
 
 
-  <h2>Rooms</h2>
-
-    <%= form.fields_for :rooms do |rooms_form| %>
-   <ul>
-      <li>
-        <%= rooms_form.label :name %><br>
-        <%= rooms_form.text_field :name %><br>
- 
-        <%= rooms_form.label :description %><br>
-        <%= rooms_form.text_area :description %><br>
-      
-      </li>
-
-  </ul>
-    <% end %>
-
-
-  
-
-   
-  
-  
-
-
-    
-
-
-  <p>
-    <%= form.submit %>
-  </p>
-
- 
-
-<% end %>
 
 
 

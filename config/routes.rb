@@ -14,7 +14,8 @@ Rails.application.routes.draw do
 
   resources  :comments 
 
-  resources :room_types 
+  resources :room_types
+  match 'room_types/:id/save' => 'room_types#update', :via => [:get, :post, :patch], :as => :room_type_save 
   get 'room_type/:vid/show_version' => 'room_types#show_version', :as => "room_type_show_version"
   get 'room_type/:id/show_history' => 'room_types#show_history', :as => "room_type_show_history"
 

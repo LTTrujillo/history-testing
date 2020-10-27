@@ -7,31 +7,44 @@ class RoomTypesController < ApplicationController
    def index
      @room_types = RoomType.all
      @rooms = Room.all
+     
     
 
    end
  
    def new
      @room_type = RoomType.new
-     @rooms = Room.all
-     1.times { @room_type.rooms.build }
+     @all_rooms = Room.all
+     @all_room_types = RoomType.all  
+     @is_new = true
+     @room_type_save_path = false
+   
+    #  1.times { @room_type.rooms.build }
 
    end
    
    def show
      @room_type = RoomType.find(params[:id])
-     
+     @rooms = @room_type.rooms
    end
  
    def edit
      @room_type = RoomType.find(params[:id])
-     @rooms = Room.all
+     @rooms = @room_type.rooms
+     @all_rooms = Room.all
+     @all_room_types = RoomType.all
+     @is_new = false
+     @room_type_save_path = room_type_save_path(@room_type.id)
+     
     
    end
  
    def show_version
+    #  binding.remote_pry
+     @history_view = true
      @version = PaperTrail::Version.find_by(:id => params[:vid])
      @room_type = @version.reify(belongs_to: true, has_many: true, has_one: true)
+    #  @rooms = @room_type.rooms
  
      # binding.remote_pry
      render 'show_version'
@@ -45,7 +58,16 @@ class RoomTypesController < ApplicationController
    end
  
    def create 
+    # binding.remote_pry
      @room_type = RoomType.new(room_type_params)
+     if params[:associated_rooms] && params[:associated_rooms].size > 0
+      rooms = []
+      params[:associated_rooms].each do |id|
+      room = Room.find_by(:id => id)
+      rooms << room
+    end
+      @room_type.rooms = rooms
+    end
   
      if @room_type.save
       redirect_to room_types_path
@@ -56,21 +78,20 @@ class RoomTypesController < ApplicationController
    end
  
    def update
-    
     @room_type = RoomType.find(params[:id])
-
-    # binding.remote_pry
+    @room_type.name = params[:room_type][:name]
+    @room_type.description = params[:room_type][:description]
     @room_type.rooms.delete_all
-    rooms = []
-     if params[:room_type][:rooms_attributes]["0"]
-      @room_type.rooms.delete_all
-      room = Room.find(params[:room_type][:rooms_attributes]["0"]["id"])
-      room.name = params[:room_type][:rooms_attributes]["0"]["name"]
-      room.description = params[:room_type][:rooms_attributes]["0"]["description"]
-      room.room_type_id = @room_type.id
+    # binding.remote_pry
+    if params[:associated_rooms] && params[:associated_rooms].size > 0
+      rooms = []
+      params[:associated_rooms].each do |id|
+      room = Room.find_by(:id => id)
       rooms << room
     end
-    @room_type.rooms = rooms
+      @room_type.rooms = rooms
+    end
+
     @room_type.save
     # @room_type.paper_trail.save_with_version
     
@@ -86,7 +107,14 @@ class RoomTypesController < ApplicationController
    
  
    def destroy
+    # binding.remote_pry
      @room_type = RoomType.find(params[:id])
+     if @room_type.rooms
+      @room_type.rooms.each do |room|
+        room.room_type_id = nil
+      end
+      @room_type.save
+    end
      @room_type.destroy
    
      redirect_to room_types_path
