@@ -1,13 +1,18 @@
-<%= react_component("RoomTypePresenter", { 
-  room_type: @room_type,
-  rooms: @rooms,
 
-  show_version_path: room_type_show_version_path(@room_type.id, @room_type),
-  history_view: true
+
+<% if @old_room_type %>
   
+<%= react_component("RoomTypePresenter", { 
+  room_type: @old_room_type,
+  rooms: @old_rooms,
+  history_view: @history_view
   }) %>
+<% end %>
 
-  <%= link_to 'Close', room_type_path(@room_type) %>
+<% if @room_type %>
+  <%= link_to 'Back', room_type_path(@room_type)%>
+<% end %>
+
 
 
 

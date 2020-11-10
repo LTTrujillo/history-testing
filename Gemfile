@@ -52,8 +52,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'paper_trail'
-  gem 'paper_trail-association_tracking'
+  gem 'paper_trail', '~> 9.2.0'
+  gem 'paper_trail-association_tracking', '~> 1.1.0'
   gem 'pry-remote'
 end
 

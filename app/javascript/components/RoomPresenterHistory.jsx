@@ -1,26 +1,17 @@
 import React from "react"
 import classNames from 'classnames';
-class RoomTypePresenterHistory extends React.Component {
+class RoomPresenterHistory extends React.Component {
   constructor(props) {
     super(props)
 
   }
 
   render() {
-    console.log("History", this.props)
+    // console.log("History", this.props)
     var tabClasses = classNames({
       'active': this.props.active_tab == 'history',
       'tab-pane': true
     })
-
-  //   <% @versions.each do |version| %>
-  //   <tr>
-  //     <td><%= version.id %></td>
-  //     <td><%= version.created_at %></td>
-  //     <td><%= link_to 'Show Version', article_show_version_path(version.id) %></td> 
-  //   </tr>
-  // <% end %>
-
     return (
       <div className={tabClasses} id="history">
         <div className="row">
@@ -51,7 +42,8 @@ class RoomTypePresenterHistory extends React.Component {
          <tr key={version.id}>
            <td>{version.id}</td> 
            <td>{version.created_at}</td> 
-           <td><a href={`/room_type/${this.props.room_type.id}/show_version/${version.id}`}>Show Version</a></td>
+           <td><a href={`/room/${version.id}/show_version`}>Show Version</a></td>
+           
          </tr>
         )
       })
@@ -63,4 +55,4 @@ class RoomTypePresenterHistory extends React.Component {
 
 }
 
-export default RoomTypePresenterHistory
+export default RoomPresenterHistory

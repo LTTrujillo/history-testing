@@ -1,8 +1,8 @@
 class RoomType < ApplicationRecord
   has_paper_trail
-  has_many :rooms
+  has_many :rooms, autosave: true
+
   # accepts_nested_attributes_for :rooms
-  accepts_nested_attributes_for :rooms, :allow_destroy => true
   #  before_update :check_update
 
   # def check_update

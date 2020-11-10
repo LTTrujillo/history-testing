@@ -1,0 +1,9 @@
+
+<%= react_component("RoomPresenter", { 
+  room: @room,
+  versions: @room.versions,
+  history_view: false
+  
+  }) %>
+
+  <%= link_to 'Close', room_types_path() %>

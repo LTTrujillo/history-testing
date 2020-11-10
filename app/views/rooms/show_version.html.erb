@@ -1,0 +1,16 @@
+
+<% if @room %>
+  <%= react_component("RoomPresenter", { 
+  room: @room,
+  history_view: @history_view
+  }) %>
+<% end %>
+
+<% if @room %>
+  <%= link_to 'Back', room_show_history_path(@room.id, @room)%>
+<% end %>
+
+
+
+
+

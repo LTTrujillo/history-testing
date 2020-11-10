@@ -1,29 +1,11 @@
-
-<%= form_with model: @room, local: true do |form| %>
- 
- 
- 
- 
-  <p>
-    <%= form.label :name %><br>
-    <%= form.text_field :name %>
-  </p>
-  <p>
-    <%= form.label :identifier %><br>
-    <%= form.text_area :description %>
-  </p>
-
-
-  
-
-  
-  <p>
-    <%= form.submit %>
-  </p>
-
- 
-
-<% end %>
+<%= react_component("RoomBuilder", { 
+  room: @room,
+  rooms: @rooms,
+  all_rooms: @all_rooms,
+  all_room_types: @all_room_types,
+  is_new: @is_new, 
+  room_create_path: rooms_path(),
+  room_save_path: @room_save_path}) %>
  
 
 

@@ -1,24 +1,16 @@
 import React from "react"
-import RoomTypeBuilderWorkspace from "./RoomTypeBuilderWorkspace";
-import RoomTypeBuilderTabs from "./RoomTypeBuilderTabs";
-class RoomTypeBuilder extends React.Component {
+import RoomBuilderWorkspace from "./RoomBuilderWorkspace";
+import RoomBuilderTabs from "./RoomBuilderTabs";
+class RoomBuilder extends React.Component {
   constructor(props) {
     super(props);
-
-    var rooms 
-    this.props.rooms && this.props.rooms.length
-      ? rooms = this.props.rooms.map(room => room.id)
-      : rooms = []
 
     this.state = {
       /* ui state */
       active_tab: 'general',
-      room_type: this.props.room_type,
-      rooms: rooms,
-      all_rooms: this.props.all_rooms,
-      all_room_types: this.props.all_room_types,
-      room_type_create_path: this.props.room_type_create_path,
-      room_type_save_path: this.props.room_type_save_path,
+      room: this.props.room,
+      room_create_path: this.props.room_create_path,
+      room_save_path: this.props.room_save_path,
       is_new: this.props.is_new
 
 
@@ -27,7 +19,6 @@ class RoomTypeBuilder extends React.Component {
     this.setActiveTab = this.setActiveTab.bind(this)
     this.onNameChange = this.onNameChange.bind(this)
     this.onDescriptionChange = this.onDescriptionChange.bind(this)
-    this.onChangeRooms = this.onChangeRooms.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.prepParams = this.prepParams.bind(this)
   }
@@ -36,8 +27,8 @@ class RoomTypeBuilder extends React.Component {
     console.log("builder", this.state)
     return (
       <div>
-        <RoomTypeBuilderTabs {...this.state} setActiveTab={this.setActiveTab} />
-        <RoomTypeBuilderWorkspace {...this.state} onNameChange={this.onNameChange} onDescriptionChange={this.onDescriptionChange} onChangeRooms={this.onChangeRooms} />
+        <RoomBuilderTabs {...this.state} setActiveTab={this.setActiveTab} />
+        <RoomBuilderWorkspace {...this.state} onNameChange={this.onNameChange} onDescriptionChange={this.onDescriptionChange} />
         <form ref="form" onClick={this.handleSubmit}>
           <button type="submit">Submit</button>
         </form>
@@ -48,34 +39,29 @@ class RoomTypeBuilder extends React.Component {
 
   onNameChange(event){
     // console.log("event",event.target.value)
-    var room_type = this.state.room_type
-    room_type.name = event.target.value
+    var room = this.state.room
+    room.name = event.target.value
     this.setState({
-      room_type: room_type
+      room: room
     })
   
   }
   onDescriptionChange(event){
     // console.log("event",event.target.value)
-    var room_type = this.state.room_type
-    room_type.description = event.target.value
+    var room = this.state.room
+    room.description = event.target.value
     this.setState({
-      room_type: room_type
+      room: room
     })
   
   }
 
-  onChangeRooms(selected_rooms) {
-    this.setState({rooms: selected_rooms})
-  }
-
   prepParams() {
     return {
-      room_type: {
-        name: this.state.room_type.name,
-        description: this.state.room_type.description,
+      room: {
+        name: this.state.room.name,
+        description: this.state.room.description,
       },
-      associated_rooms:this.state.rooms
     }
   }
 
@@ -92,11 +78,11 @@ class RoomTypeBuilder extends React.Component {
       $.ajax({
         type: 'POST',
         url: self.state.is_new
-                ? self.state.room_type_create_path
-                : self.state.room_type_save_path,
+                ? self.state.room_create_path
+                : self.state.room_save_path,
         data: params
       }).done(function (data) {
-        // console.log(data.errors)
+        console.log(data)
         // if(Object.keys(data.errors).length){
         //   self.setState({
         //     errors: data.errors
@@ -106,7 +92,7 @@ class RoomTypeBuilder extends React.Component {
         //   self.setState({ loading: false })
         //   window.parent.$(window.parent).trigger("folioItemSavedSuccessfully")
         //   if (parent && parent.refresh_data) {
-        //     parent.refresh_data(I18n.t('room_type_saved_successfully'))
+        //     parent.refresh_data(I18n.t('room_saved_successfully'))
         //   }
         //   if (parent && parent.hide_modal) {
         //     parent.hide_modal()
@@ -130,4 +116,4 @@ class RoomTypeBuilder extends React.Component {
 
 }
 
-export default RoomTypeBuilder
+export default RoomBuilder
